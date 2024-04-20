@@ -1,0 +1,138 @@
+@import 'base';
+@import 'config/config';
+
+
+
+.graphic-top-left{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80%;
+    max-width: 220px;
+    z-index: -1;
+}
+
+.graphic-bottom-right{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 80%;
+    max-width: 220px;
+    z-index: -1;
+}
+
+.graphic-lock{
+    width: 80%;
+    max-width: 180px;
+    opacity: 0.7;
+}
+
+
+.container{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .form-holder{
+        width: 90%;
+        max-width: 400px;
+        min-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        // box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+        align-items: center;
+        padding: 10px;
+
+        img{
+            width: 50px;
+            height: 50px;
+        }
+
+        .form-title{
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #1b1e27;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+
+            span{
+                color: var(--main-green);
+            }
+        }
+
+        .form-prompt{
+            color: var(--soft-grey);
+            margin-top: 5px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        form{
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+
+            p{
+                width: 100%;
+                padding: auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                
+            }
+
+            .errorlist{
+                width: 100%;
+                list-style-type: none;
+                padding: auto;
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding-left: 23px;
+                max-width: 350px;
+                li{
+                    color: var(--soft-red);
+                }
+                text-align: start;
+            }
+
+            label{
+                display: none;
+            }
+            input{
+                width: 100%;
+                margin: 10px 5px;
+                max-width: 350px;
+                background-color: transparent;
+                padding: 0.9rem;
+                // border: 0.5px solid rgb(126, 123, 123);
+                border: none;
+                border-bottom: 0.5px solid rgb(126, 123, 123);
+                
+                outline: none;
+            }
+
+            input[type=submit]{
+                background-color: var(--main-green);
+                color: white;
+                cursor: pointer;
+            }
+        }
+
+        .login-option{
+            text-align: center;
+            margin-top: 10px;
+
+            p{
+                margin-top: 10px;
+            }
+        }
+    }
+}
