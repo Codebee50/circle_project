@@ -1,3 +1,16 @@
+A PROJECT PRESENTED IN PARTIAL FULFILLMENT OF THE REQUIREMENT OF THE COURSE STUDENTS INDUSTRIAL WORK EXPERIENCE SCHEME (COS 386)
+
+**Name:** Onuh Kyrian Udochukwu 
+
+**Reg no:** 2020/248329
+
+**Department:** Computer Science  
+
+**School:** University of Nigeria Nuskka
+
+
+
+
 # Steps to run this project locally
 
 ### Clone the repository

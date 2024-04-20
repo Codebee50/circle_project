@@ -18,7 +18,6 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv()
 
-import dj_database_url
 
 
 # Quick-start development settings - unsuitable for production
@@ -28,7 +27,7 @@ import dj_database_url
 SECRET_KEY = 'django-insecure-8gy%-bc__6#t@q(ad^m-!mr3danz!80@j#0nt=&qqvb=2e#%(4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -36,19 +35,15 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'chat',
     'circle',
     'memo',
     'accounts',
-    'daphne',
-    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'storages',
 ]
 
 MIDDLEWARE = [
@@ -89,22 +84,13 @@ LOGOUT_URL = 'accounts:logout'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-else:
-    # Replace the SQLite DATABASES configuration with PostgreSQL:
-    DATABASES = {
-        'default': dj_database_url.config(
-            # Replace this value with your local database's connection string.
-            default=os.environ.get('RENDER_DB_EXTERNAL_URL'),
-            conn_max_age=600
-        )
-    }
+}
 
 
 MEDIA_URL = '/media/'
@@ -133,7 +119,6 @@ AUTHENTICATION_BACKENDS = [
     'accounts.authentication.EmailBackend'
 ]
 
-ASGI_APPLICATION = "nnra_circle.asgi.application"
 
 
 
@@ -169,15 +154,6 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 
 
 if DEBUG:
-    # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    # EMAIL_HOST = 'smtp.gmail.com'
-    # EMAIL_PORT = 587
-    # EMAIL_USE_TLS = True
-    # EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER_DEBUG')
-    # EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD_DEBUG')
-    # EMAIL_FROM_USER = os.environ.get('EMAIL_HOST_USER_DEBUG')
-    # DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER_DEBUG')
-
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
     EMAIL_PORT = '2525'
@@ -197,57 +173,5 @@ else:
     DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER_DEBUG')
 
 
-if DEBUG:
-    CHANNEL_LAYERS = {
-        "default": {
-            "BACKEND": "channels.layers.InMemoryChannelLayer"
-        }
-    }
-else:
-    CHANNEL_LAYERS = {
-        "default": {
-            "BACKEND": "channels_redis.core.RedisChannelLayer",
-            "CONFIG": {
-                "hosts": [("127.0.0.1", 6379)],
-            },
-        },
-    }
 
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "channels_redis.core.RedisChannelLayer",
-#         "CONFIG": {
-#             "hosts": [("127.0.0.1", 6379)],
-#         },
-#     },
-# }
-
-if not DEBUG:
-    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-
-
-    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-
-    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-
-    AWS_S3_FILE_OVERWRITE = False
-
-
-    STORAGES = {
-
-        # Media file (image) management   
-        "default": {
-            "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
-            "LOCATION": 'media/'
-        },
-        
-        # CSS and JS file management
-        "staticfiles": {
-            "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
-        },
-
-    }
-
-    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
