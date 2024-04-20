@@ -118,7 +118,7 @@ a {
   width: 100%;
   .memos-container {
     width: 100%;
-    min-height: 60vh;
+    min-height: 40vh;
     display: flex;
     flex-direction: column;
 
@@ -352,6 +352,105 @@ a {
           }
         }
       }
+
+      .actions-container{
+        margin-top: 70px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        button{
+          padding: 15px 20px;
+          cursor: pointer;
+          outline: none;
+          border: none;
+          border-radius: 6px;
+        }
+
+        .edit-btn:hover{
+          background-color: #e3ede5;
+        }
+
+        .delete-btn{
+          background-color: #b0141c;
+          color: white;
+        }
+
+        .delete-btn:hover{
+          background-color: #c8434a;
+        }
+      }
+    }
+  }
+}
+
+
+.delete-memo-modal-content{
+  display: flex;
+  flex-direction: column;
+
+  button{
+    padding: 10px 15px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border-radius: 6px;
+  }
+
+
+  .top-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-bottom: 20px;
+
+    p{
+      color: black;
+    }
+
+    svg{
+      cursor: pointer;
+    }
+  }
+
+  .delete-warning-con{
+    display: flex;
+    flex-direction: row;
+
+
+    svg{
+      width: 25px;
+      height: 25px;
+      fill: var(--harsh-red);
+      flex-shrink: 0;
+    }
+
+    p{
+      margin-left: 5px;
+      font-size: 0.9rem;
+    }
+  }
+
+  .actions{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+
+    .delete-btn{
+      background-color: var(--harsh-red);
+      color: white;      
+    }
+
+    .cancel-btn{
+      background-color: transparent;
+      color: var(--text-dark);
     }
   }
 }

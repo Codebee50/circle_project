@@ -252,10 +252,16 @@ body {
             border: 0.5px solid rgba(0, 0, 0, 0.332);
             padding: 10px;
             position: relative;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-all;
             // overflow: hidden;
 
             p {
+              max-width: 390px;
               font-size: 0.9rem;
+              word-wrap: break-word;
+              overflow-wrap: break-word;
             }
 
             svg {

@@ -12,11 +12,32 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.db.models import Q
 from .utils import paginate
 from accounts.utils import render_404
+from django.views.decorators.http import require_POST
+
 
 
 
 
 # Create your views here.
+
+@require_POST
+@login_required
+def delete_memo(request, mid):
+    try:
+        memo = Memo.objects.get(id=mid)
+    except Memo.DoesNotExist:
+        return JsonResponse({
+            'message': 'Memo not found',
+            'status': 404,
+            'data': {}
+        }, status=404)
+    
+    memo.delete()
+    return JsonResponse({
+        'message': 'Memo deleted successfully',
+        'status': 200,
+        'data': {}
+    })
 
 @login_required
 def memo_list(request):

@@ -6,6 +6,7 @@
   --body-font: "poppins", sans-serif;
   --like-black: #191D29;
   --soft-red2: #9F3418;
+  --harsh-red:#b0141c;
   --text-dark: #49566B;
   --soft-light-green: #E8F4E3;
   --chat-background:#FBFBFB;
@@ -1001,6 +1002,7 @@ footer .copyright-message p {
   --body-font: "poppins", sans-serif;
   --like-black: #191D29;
   --soft-red2: #9F3418;
+  --harsh-red:#b0141c;
   --text-dark: #49566B;
   --soft-light-green: #E8F4E3;
   --chat-background:#FBFBFB;
@@ -1128,6 +1130,7 @@ a {
 }
 .memo-list-section .memos-container {
   width: 100%;
+  min-height: 40vh;
   display: flex;
   flex-direction: column;
 }
@@ -1337,6 +1340,87 @@ a {
 .view-memo-section .right .content-container .attached-documents-container .documents-container .document .file-info .file-size {
   font-size: 0.8rem;
   opacity: 0.5;
+}
+.view-memo-section .right .content-container .actions-container {
+  margin-top: 70px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.view-memo-section .right .content-container .actions-container button {
+  padding: 15px 20px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  border-radius: 6px;
+}
+.view-memo-section .right .content-container .actions-container .edit-btn:hover {
+  background-color: #e3ede5;
+}
+.view-memo-section .right .content-container .actions-container .delete-btn {
+  background-color: #b0141c;
+  color: white;
+}
+.view-memo-section .right .content-container .actions-container .delete-btn:hover {
+  background-color: #c8434a;
+}
+
+.delete-memo-modal-content {
+  display: flex;
+  flex-direction: column;
+}
+.delete-memo-modal-content button {
+  padding: 10px 15px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  border-radius: 6px;
+}
+.delete-memo-modal-content .top-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+.delete-memo-modal-content .top-container p {
+  color: black;
+}
+.delete-memo-modal-content .top-container svg {
+  cursor: pointer;
+}
+.delete-memo-modal-content .delete-warning-con {
+  display: flex;
+  flex-direction: row;
+}
+.delete-memo-modal-content .delete-warning-con svg {
+  width: 25px;
+  height: 25px;
+  fill: var(--harsh-red);
+  flex-shrink: 0;
+}
+.delete-memo-modal-content .delete-warning-con p {
+  margin-left: 5px;
+  font-size: 0.9rem;
+}
+.delete-memo-modal-content .actions {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.delete-memo-modal-content .actions .delete-btn {
+  background-color: var(--harsh-red);
+  color: white;
+}
+.delete-memo-modal-content .actions .cancel-btn {
+  background-color: transparent;
+  color: var(--text-dark);
 }
 
 @media screen and (max-width: 1330px) {

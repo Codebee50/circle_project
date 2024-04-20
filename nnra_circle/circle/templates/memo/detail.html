@@ -14,6 +14,7 @@
     />
   </head>
   <body>
+    {%csrf_token%}
     <section class="view-memo-section">
         {% if memo.image != 'def-memo-img.png' %}
       <div class="left">
@@ -24,7 +25,7 @@
       <div class="right">
         <div class="content-container">
           <p class="memo-title">{{memo.title}}</p>
-
+          <input type="hidden" name="memoid" id="memoid" value="{{memo.id}}">
           <div class="publisher-container">
             <img src="{{memo.sender.profileImg.url}}" alt="" />
             <div class="right-info">
@@ -59,7 +60,13 @@
           </div>
 
           {% endif %}
-
+          
+          {% if user.id == memo.sender.id %}
+          <div class="actions-container">
+            <button class="delete-btn" id="btn-init-delete-memo">Delete memo</button>
+            <button class="edit-btn">Edit memo</button>
+          </div>
+          {% endif %}
         
         </div>
       </div>
@@ -68,8 +75,37 @@
     </section>
 
 
+    <div class="modal-section" id="delete-memo-modal">
+      <div class="modal-content delete-memo-modal-content" style="padding: 10px;">
+        <div class="top-container">
+          <p>Delete</p>
+
+          <svg class="svg-20" onclick="transitionModal('none')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"></path></svg>
+
+        </div>
+        <!-- <div class="hor-line"></div> -->
+
+        <div class="delete-warning-con">
+          <svg class="svg-30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM18 8H6V20H18V8ZM9 11H11V17H9V11ZM13 11H15V17H13V11ZM9 4V6H15V4H9Z"></path></svg>
+          <p> This action will permanently destroy all data, including files, text, and images. There will be no way to get them back.</p>
+        </div>
+
+        <div class="actions">
+
+          <button class="cancel-btn" onclick="transitionModal('none')">Cancel</button>
+          <button class="delete-btn" id="delete-memo-btn">Delete</button>
+        </div>
+
+    
+      
+      </div>
+      </div>
+
+
+
     {% include "footer.html" %}
 
-
+    <script src="{% static 'js/components.js' %}"></script>
+    <script src="{% static 'js/memodetail.js' %}"></script>
   </body>
 </html>

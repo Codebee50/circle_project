@@ -6,6 +6,7 @@
   --body-font: "poppins", sans-serif;
   --like-black: #191D29;
   --soft-red2: #9F3418;
+  --harsh-red:#b0141c;
   --text-dark: #49566B;
   --soft-light-green: #E8F4E3;
   --chat-background:#FBFBFB;
@@ -1001,6 +1002,7 @@ footer .copyright-message p {
   --body-font: "poppins", sans-serif;
   --like-black: #191D29;
   --soft-red2: #9F3418;
+  --harsh-red:#b0141c;
   --text-dark: #49566B;
   --soft-light-green: #E8F4E3;
   --chat-background:#FBFBFB;
@@ -1242,9 +1244,15 @@ body {
   border: 0.5px solid rgba(0, 0, 0, 0.332);
   padding: 10px;
   position: relative;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-all;
 }
 .configure-memo-section .bottom-form .account-information-container .supporting-documents-container .attached-files-container .attached-file p {
+  max-width: 390px;
   font-size: 0.9rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 .configure-memo-section .bottom-form .account-information-container .supporting-documents-container .attached-files-container .attached-file svg {
   opacity: 0.6;
