@@ -101,10 +101,9 @@ else:
             'USER' : os.environ.get('DB_USER'),
             'PASSWORD': os.environ.get('DB_PASSWORD'),
             'HOST': os.environ.get('DB_HOST'),
-            'PORT': '3306',
-            
+            'PORT': '3306', 
         }
-}
+    }
 
 
 
