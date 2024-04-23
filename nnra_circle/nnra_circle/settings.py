@@ -86,6 +86,7 @@ LOGOUT_URL = 'accounts:logout'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
+print(f'databasehost: {os.environ.get("DB_HOST")}')
 if DEBUG:
     DATABASES = {
         'default': {
