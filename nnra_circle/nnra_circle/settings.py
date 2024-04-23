@@ -87,6 +87,7 @@ LOGOUT_URL = 'accounts:logout'
 
 
 print(f'databasehost: {os.environ.get("DB_HOST")}')
+print(f'dbuser: {os.environ.get("DB_USER")}')
 if DEBUG:
     DATABASES = {
         'default': {
