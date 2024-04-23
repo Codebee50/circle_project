@@ -61,10 +61,10 @@
 
           {% endif %}
           
-          {% if user.id == memo.sender.id %}
+          {% if user.id == memo.sender.user.id %}
           <div class="actions-container">
             <button class="delete-btn" id="btn-init-delete-memo">Delete memo</button>
-            <button class="edit-btn">Edit memo</button>
+            <!-- <button class="edit-btn">Edit memo</button> -->
           </div>
           {% endif %}
         

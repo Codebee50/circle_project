@@ -2,7 +2,6 @@ const initDeleteMemo = document.getElementById('btn-init-delete-memo')
 const memoid = document.getElementById('memoid').value
 const deleteMemoBtn = document.getElementById('delete-memo-btn')
 
-console.log(memoid)
 
 initDeleteMemo.addEventListener('click', function(){
     transitionModal('delete-memo-modal')

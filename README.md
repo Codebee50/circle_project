@@ -16,7 +16,7 @@ A PROJECT PRESENTED IN PARTIAL FULFILLMENT OF THE REQUIREMENT OF THE COURSE STUD
 ### Clone the repository
 
 ``` 
-git clone https://github.com/Codebee50/NNRA-circle.git
+git clone https://github.com/Codebee50/circle_project.git
 ```
 
 ### Create a virtual environment 
