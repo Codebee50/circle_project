@@ -9,20 +9,24 @@ const selectedDeptContainers = document.getElementById(
   "selected-dept-containers"
 );
 
-const selectedIndContainers = document.getElementById('selected-individuals-containers')
+const selectedIndContainers = document.getElementById(
+  "selected-individuals-containers"
+);
 const memoTitleInput = document.getElementById("memo-title");
 const memoBodyInput = document.getElementById("memo-body");
-const individuals = document.querySelectorAll('.individual')
+const individuals = document.querySelectorAll(".individual");
 
 const selectedFiles = []; //keeps track of all supporting documents that has been chosen
 let selectedMemoImage = null;
 let selectedDepartments = [];
 const acceptedFileExtension = [".docx", ".doc", ".pdf"];
-let selectedAudience = 'memo-everyone-section';
-let selectedIndividuals = []
+let selectedAudience = "memo-everyone-section";
+let selectedIndividuals = [];
 
-function submitMemo(memoTitle, memoBody, audience='departments') {
-  showDynamicLoadingModal("The distribution of your memo is in progress. Please allow a short moment for completion");
+function submitMemo(memoTitle, memoBody, audience = "departments") {
+  showDynamicLoadingModal(
+    "The distribution of your memo is in progress. Please allow a short moment for completion"
+  );
 
   const formData = new FormData();
   formData.append("memo-title", memoTitle);
@@ -30,12 +34,12 @@ function submitMemo(memoTitle, memoBody, audience='departments') {
   formData.append("memo-image", selectedMemoImage);
   formData.append("selected-audience", selectedAudience);
   formData.append("selected-departments", JSON.stringify(selectedDepartments));
-  formData.append("selected-individuals", JSON.stringify(selectedIndividuals))
-  formData.append('audience', audience)
+  formData.append("selected-individuals", JSON.stringify(selectedIndividuals));
+  formData.append("audience", audience);
 
   for (const file of selectedFiles) {
     formData.append("files", file);
-    console.log(file)
+    console.log(file);
   }
 
   fetch("/memo/create/", {
@@ -47,27 +51,28 @@ function submitMemo(memoTitle, memoBody, audience='departments') {
   })
     .then((response) => response.json())
     .then((data) => {
-      if(data.status== 200){
-        swapSections('last', 'memo-success-section')
-        const linkDiv = document.querySelector('.link-div')
-        linkDiv.innerHTML = ''
+      if (data.status == 200) {
+        swapSections("last", "memo-success-section");
+        const linkDiv = document.querySelector(".link-div");
+        linkDiv.innerHTML = "";
         const link = `
         <a href="${data.data.url}" class="btn-arr-txt">
         <svg class="svg-20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z"></path></svg>
         <p>View memo here</p>
-      </a>`
+      </a>`;
 
-        linkDiv.insertAdjacentHTML('beforeend', link)
+        linkDiv.insertAdjacentHTML("beforeend", link);
       }
-    }).catch(error => {
+    })
+    .catch((error) => {
       showToast({
         message: `An error occured while sending memo ${error.message} `,
-        style: 'error'
-      })
+        style: "error",
+      });
     })
-    .finally(()=>{
-      transitionModal('none')
-    })
+    .finally(() => {
+      transitionModal("none");
+    });
 }
 
 function getParam(paramName) {
@@ -79,7 +84,6 @@ function getParam(paramName) {
 
   return null;
 }
-
 
 function addToHistory(pageIndex = 1, sectionId = "configure-memo-section") {
   try {
@@ -118,7 +122,6 @@ function selectProgressStep(number) {
 }
 
 selectProgressStep(1);
-
 
 function swapSections(progressStep, newSectionId, addHistory = false) {
   document.querySelectorAll(`.memo-section`).forEach(function (section) {
@@ -221,33 +224,40 @@ function addIndividualUi(name, profileid) {
   selectedIndContainers.insertAdjacentHTML("beforeend", htmlEl);
 }
 
-document.getElementById('btn-add-individual').addEventListener('click', function(){
-  transitionModal('select-individual-modal')
-})
+document
+  .getElementById("btn-add-individual")
+  .addEventListener("click", function () {
+    transitionModal("select-individual-modal");
+  });
 
-document.querySelector('.memo-users-container').addEventListener('click', function(e){
-  const chatItem = e.target.closest('.chat-item')
-  if(chatItem){
-    chatItem.classList.toggle('selected')
-  }
-})
-
-document.getElementById('btn-apply-checked-individuals').addEventListener('click', function(){
-  selectedIndContainers.innerHTML = ''
-  selectedIndividuals = []
-
-  individuals.forEach(function(individual){
-    if(individual.classList.contains('selected')){
-      const individualId = individual.getAttribute('data-profileid')
-      selectedIndividuals.push(individualId)
-      const fullname = `${individual.getAttribute('data-firstname')} ${individual.getAttribute('data-lastname')}`
-      addIndividualUi(fullname, individualId)
+document
+  .querySelector(".memo-users-container")
+  .addEventListener("click", function (e) {
+    const chatItem = e.target.closest(".chat-item");
+    if (chatItem) {
+      chatItem.classList.toggle("selected");
     }
-  })
+  });
 
-  transitionModal('none')
+document
+  .getElementById("btn-apply-checked-individuals")
+  .addEventListener("click", function () {
+    selectedIndContainers.innerHTML = "";
+    selectedIndividuals = [];
 
-})
+    individuals.forEach(function (individual) {
+      if (individual.classList.contains("selected")) {
+        const individualId = individual.getAttribute("data-profileid");
+        selectedIndividuals.push(individualId);
+        const fullname = `${individual.getAttribute(
+          "data-firstname"
+        )} ${individual.getAttribute("data-lastname")}`;
+        addIndividualUi(fullname, individualId);
+      }
+    });
+
+    transitionModal("none");
+  });
 
 window.addEventListener("popstate", function (event) {
   const sectionId = getParam("section");
@@ -258,63 +268,71 @@ window.addEventListener("popstate", function (event) {
   }
 });
 
-function removeSelectedItem(e, containerArray){
+function removeSelectedItem(e, containerArray) {
   if (e.target.classList.contains("remove-selected")) {
     const selectedItem = e.target.closest(".selected-item");
     selectedItem.remove();
 
-    containerArray.splice(
-      containerArray.indexOf(String(selectedItem.id)),
-      1
-    );
-    return selectedItem.id
+    containerArray.splice(containerArray.indexOf(String(selectedItem.id)), 1);
+    return selectedItem.id;
   }
-  return false
+  return false;
 }
 
-
-const searchInput = document.querySelector('.search-individuals-input')
-searchInput.addEventListener('input', function(e){
-  if(e.target.value == ''){
-    individuals.forEach(function(individual){
-      individual.classList.add('visible')
-    })
+const searchInput = document.querySelector(".search-individuals-input");
+searchInput.addEventListener("input", function (e) {
+  if (e.target.value == "") {
+    individuals.forEach(function (individual) {
+      individual.classList.add("visible");
+    });
   }
-})
+});
 
-document.getElementById('search-form').addEventListener('submit', function(e){
-  e.preventDefault()
+document.getElementById("search-form").addEventListener("submit", function (e) {
+  e.preventDefault();
 
-  individuals.forEach(function(individual){
-    individual.classList.remove('visible')
-    const firstname = individual.getAttribute('data-firstname').toLocaleLowerCase()
-    const lastname= individual.getAttribute('data-lastname').toLocaleLowerCase()
-    const officename= individual.getAttribute('data-officename').toLocaleLowerCase()
-    const username = individual.getAttribute('data-username').toLocaleLowerCase()
+  individuals.forEach(function (individual) {
+    individual.classList.remove("visible");
+    const firstname = individual
+      .getAttribute("data-firstname")
+      .toLocaleLowerCase();
+    const lastname = individual
+      .getAttribute("data-lastname")
+      .toLocaleLowerCase();
+    const officename = individual
+      .getAttribute("data-officename")
+      .toLocaleLowerCase();
+    const username = individual
+      .getAttribute("data-username")
+      .toLocaleLowerCase();
 
-    const searchValue = searchInput.value
-    if(firstname.includes(searchValue) || lastname.includes(searchValue) || officename.includes(searchValue) || username.includes(searchValue)){
-        individual.classList.add('visible')
+    const searchValue = searchInput.value;
+    if (
+      firstname.includes(searchValue) ||
+      lastname.includes(searchValue) ||
+      officename.includes(searchValue) ||
+      username.includes(searchValue)
+    ) {
+      individual.classList.add("visible");
     }
-   
-  })
-
-})
-
+  });
+});
 
 selectedDeptContainers.addEventListener("click", function (e) {
-  const selected = removeSelectedItem(e, selectedDepartments)
-  if(selected){
+  const selected = removeSelectedItem(e, selectedDepartments);
+  if (selected) {
     document.querySelector(`.check-${selected}`).checked = false;
   }
 });
 
-selectedIndContainers.addEventListener('click', function(e){
-  const selected = removeSelectedItem(e, selectedIndividuals)
-  if(selected){
-    document.querySelector(`.chat-item-${selected}`).classList.remove('selected')
+selectedIndContainers.addEventListener("click", function (e) {
+  const selected = removeSelectedItem(e, selectedIndividuals);
+  if (selected) {
+    document
+      .querySelector(`.chat-item-${selected}`)
+      .classList.remove("selected");
   }
-})
+});
 
 document
   .getElementById("btn-add-department")
@@ -322,14 +340,17 @@ document
     transitionModal("select-dept-modal");
   });
 
-document.getElementById('submit-memo-btn-dept').addEventListener('click', function(){
-  submitMemo(memoTitleInput.value, memoBodyInput.value, 'departments')
-})
+document
+  .getElementById("submit-memo-btn-dept")
+  .addEventListener("click", function () {
+    submitMemo(memoTitleInput.value, memoBodyInput.value, "departments");
+  });
 
-document.getElementById('submit-memo-btn-ind').addEventListener('click', function(){
-  submitMemo(memoTitleInput.value, memoBodyInput.value, 'individuals')
-})
-
+document
+  .getElementById("submit-memo-btn-ind")
+  .addEventListener("click", function () {
+    submitMemo(memoTitleInput.value, memoBodyInput.value, "individuals");
+  });
 
 document
   .getElementById("btn-apply-checked-departments")
@@ -369,9 +390,9 @@ document
   .getElementById("btn-swap-choose-audience")
   .addEventListener("click", function () {
     if (selectedAudience) {
-      if(selectedAudience === 'memo-everyone-section'){
-        submitMemo(memoTitleInput.value, memoBodyInput.value, 'all')
-        return
+      if (selectedAudience === "memo-everyone-section") {
+        submitMemo(memoTitleInput.value, memoBodyInput.value, "all");
+        return;
       }
 
       swapSections(3, selectedAudience, true);

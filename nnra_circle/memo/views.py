@@ -14,12 +14,7 @@ from .utils import paginate
 from accounts.utils import render_404
 from django.views.decorators.http import require_POST
 
-
-
-
-
 # Create your views here.
-
 @require_POST
 @login_required
 def delete_memo(request, mid):
@@ -108,7 +103,6 @@ def create_memo(title, body, image, rec_type, sender):
         memo = Memo.objects.create(title=title, body=body, rec_type=rec_type, sender=sender)
 
     return memo
-
 
 @login_required
 def create(request):
