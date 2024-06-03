@@ -86,8 +86,7 @@ LOGOUT_URL = 'accounts:logout'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-print(f'databasehost: {os.environ.get("DB_HOST")}')
-print(f'dbuser: {os.environ.get("DB_USER")}')
+
 if DEBUG:
     DATABASES = {
         'default': {
@@ -99,10 +98,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.environ.get('DB_NAME'),
-            'USER' : os.environ.get('DB_USER'),
-            'PASSWORD': os.environ.get('DB_PASSWORD'),
-            'HOST': os.environ.get('DB_HOST'),
+            'NAME': 'udo$default',
+            'USER' : 'udo',
+            'PASSWORD': 'udopython345#',
+            'HOST': 'udo.mysql.pythonanywhere-services.com',
             'PORT': '3306', 
         }
     }
@@ -158,8 +157,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')#specifies where to keep all static files
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]#specifies where to draw static fiels from
-
-
 
 
 # Default primary key field type

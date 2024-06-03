@@ -4,61 +4,29 @@ from .forms import UserRegistrationForm, LoginForm, OtpForm, ResetPasswordForm
 from django.contrib.auth.models import User
 from .utils import generate_send_otp_code
 from .models import Otpcode, Profile, Office
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from .serializers import ProfileSerializer
-from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
 from .utils import render_404, user_exists, validate_otp_code, render_error_page
 
 
 # Create your views here.
-
 def view_profile(request, uid):
     try:
         profile = Profile.objects.prefetch_related('office','user').get(user__id =uid)
     except Profile.DoesNotExist:
         profile = None
-        #TODO: create a 404 page and redirect there
-
 
     return render(request, 'accounts/profile.html', {
             'profile': profile
         })
+
 @login_required
 def log_out(request):
     logout(request)
     return redirect('/')
 
-@login_required
-def network_prompt(request):
-    user = request.user
-
-    try:
-        profile = Profile.objects.select_related('user', 'office').get(user=user)
-    except Profile.DoesNotExist:
-        return redirect('accounts:resendcode', uid=user.id)
-    
-    if not profile.office:
-        return redirect('accounts:selectdept', uid=user.id)
-
-    peopley_may_know = get_people_may_know(user_profile=profile)
-    return render(request, 'accounts/networkprompt.html', {
-        'people_may_know': peopley_may_know
-    })
-
-
-def get_people_may_know(user_profile, required_number=5):
-    users = Profile.objects.exclude(user=user_profile.user).filter(office =user_profile.office)
-    number_of_users = users.count()
-    remainder = required_number - number_of_users
-
-    if remainder > 0:
-        users_value = users.values_list('id', flat=True)
-        more_users = Profile.objects.exclude(Q(id=user_profile.id) | Q(id__in=users_value))[:remainder]
-        users = more_users | users 
-    return users
 
 def get_user_profile(request, profile_id):
     if request.method == 'POST':
@@ -78,45 +46,6 @@ def get_user_profile(request, profile_id):
             'message': 'Success',
             'profile': serialiazer.data
         }, status=200)
-
-@login_required
-def list_people(request):
-    search= request.GET.get('search')
-    fd = request.GET.get('fd')
-    user= request.user
-    user_profile = Profile.objects.filter(user=user).select_related('user').first()#getting the profile for the currently logged in user
-
-    profiles = Profile.objects.all().exclude(user=user).select_related('user', 'office')
-    offices = Office.objects.all()
-
-    if search is not None:
-        username_lookup = Q(user__username__icontains=search)
-        firstname_lookup = Q(user__first_name__icontains=search)
-        lastname_lookup = Q(user__last_name__icontains=search)
-        fullname_lookup = Q(fullname__icontains=search)
-        profiles = profiles.filter(username_lookup | firstname_lookup | lastname_lookup | fullname_lookup)
-    
-    if fd is not None:
-        office_lookup = Q(office__office_name__icontains=fd)
-        # department_lookup = Q(office__department__dept_name__icontains=fd)
-        profiles = profiles.filter(office_lookup)
-
-    
-    return render(request, 'accounts/listitems.html', {
-        'page': 'people',
-        'profiles': profiles,
-        'search_term': search, 
-        'offices': offices,
-        'fd': fd, 
-        'user_profile': user_profile})
-
-@login_required
-def list_department(request):
-    offices = Office.objects.annotate(employee_count=Count('profile')).order_by('-employee_count')
-    return render(request, 'accounts/listitems.html', {
-        'page': 'departments',
-        'offices': offices
-    })
 
 @login_required
 def edit_profile(request):

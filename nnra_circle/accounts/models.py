@@ -52,9 +52,11 @@ class Otpcode(models.Model):
     used = models.BooleanField(default=False)
     type = models.CharField(max_length=2, choices=Type.choices, default=Type.AUTHENTICATION)
 
+    #returns true or false indicating if the otp is expired or not.
     @property
     def expired(self):
-        expiration_duration = timedelta(minutes=10)
+        # time delta can be used to perform date and time arithmetic
+        expiration_duration = timedelta(minutes=10)#returns a date time object
         expiration_time = self.created + expiration_duration
         return timezone.now() > expiration_time
     
